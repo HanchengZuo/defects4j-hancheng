@@ -1,0 +1,26 @@
+diff --git a/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendSavepointTest.java b/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendSavepointTest.java
+index 2b4c6a79a11..da4590efc2d 100644
+--- a/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendSavepointTest.java
++++ b/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendSavepointTest.java
+@@ -184,7 +184,7 @@ public class CliFrontendSavepointTest extends CliFrontendTestBase {
+ 
+     @Test
+     public void testTriggerSavepointCustomFormatShortOption() throws Exception {
+-        testTriggerSavepointCustomFormat("-type", SavepointFormatType.NATIVE);
++        testTriggerSavepointCustomFormat("-t", SavepointFormatType.NATIVE);
+     }
+ 
+     @Test
+diff --git a/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendStopWithSavepointTest.java b/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendStopWithSavepointTest.java
+index 89716ca19f9..da4d40727d1 100644
+--- a/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendStopWithSavepointTest.java
++++ b/flink-clients/src/test/java/org/apache/flink/client/cli/CliFrontendStopWithSavepointTest.java
+@@ -121,7 +121,7 @@ public class CliFrontendStopWithSavepointTest extends CliFrontendTestBase {
+ 
+     @Test
+     public void testStopWithExplicitSavepointTypeShortOption() throws Exception {
+-        testStopWithExplicitSavepointType("-type", SavepointFormatType.NATIVE);
++        testStopWithExplicitSavepointType("-t", SavepointFormatType.NATIVE);
+     }
+ 
+     @Test

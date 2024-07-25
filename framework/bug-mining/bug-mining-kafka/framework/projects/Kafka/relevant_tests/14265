@@ -1,0 +1,5 @@
+org.apache.kafka.metadata.authorizer.StandardAuthorizerTest
+org.apache.kafka.metadata.authorizer.StandardAclWithIdTest
+org.apache.kafka.metadata.authorizer.StandardAclTest
+org.apache.kafka.metadata.authorizer.StandardAclRecordIteratorTest
+org.apache.kafka.metadata.authorizer.ClusterMetadataAuthorizerTest	

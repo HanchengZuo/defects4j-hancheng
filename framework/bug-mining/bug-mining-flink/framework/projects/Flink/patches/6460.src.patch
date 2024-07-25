@@ -1,0 +1,13 @@
+diff --git a/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java b/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
+index 05ac0757c1b..8cc4ad4c61b 100644
+--- a/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
++++ b/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
+@@ -149,7 +149,7 @@ public class CliFrontendParser {
+ 
+     static final Option SAVEPOINT_FORMAT_OPTION =
+             new Option(
+-                    "type",
++                    "t",
+                     "type",
+                     true,
+                     "Describes the binary format in which a savepoint should be taken. Supported"

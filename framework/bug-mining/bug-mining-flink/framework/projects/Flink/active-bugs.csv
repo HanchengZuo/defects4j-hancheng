@@ -1,0 +1,2 @@
+bug.id,revision.id.buggy,revision.id.fixed,report.id,report.url
+6460,13c45ec3866e41f90905e6a268bd1d3d488df05e,ed302be6566436ca3878a121683ac3b3df8b01bd,FLINK-27319,https://issues.apache.org/jira/browse/FLINK-27319
