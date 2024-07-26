@@ -6,7 +6,7 @@ index f8de60b..3583d72 100644
      <echo message="Please run: $ant -projecthelp"/>
    </target>
  
-+  <target name="compile" depends="flink-from-maven.compile"> </target>
-+  <target name="compile.tests" depends="flink-from-maven.compile-tests"> </target>
++  <target name="compile" depends="flink-clients-from-maven.compile"> </target>
++  <target name="compile.tests" depends="flink-clients-from-maven.compile-tests"> </target>
 +
  </project>
