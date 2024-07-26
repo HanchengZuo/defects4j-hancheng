@@ -146,8 +146,8 @@ sub _init_version {
         my $module = "flink-clients";
 
         # Run maven-ant plugin and overwrite the original build.xml whenever a maven build file exists
-        my $cmd = " cd $work_dir" .
-                  " &&./mvnw ant:ant -Doverwrite=true 2>&1 -Dhttps.protocols=TLSv1.2" .
+        my $cmd = " cd $work_dir/$module" .
+                  " && ../mvnw ant:ant -Doverwrite=true 2>&1 -Dhttps.protocols=TLSv1.2" .
                   " && patch build.xml $PROJECT_DIR/build.xml.patch 2>&1" .
                   " && rm -rf $GEN_BUILDFILE_DIR/$rev_id && mkdir -p $GEN_BUILDFILE_DIR/$rev_id 2>&1" .
                   " && cp maven-build.* $GEN_BUILDFILE_DIR/$rev_id 2>&1" .
@@ -159,10 +159,9 @@ sub _init_version {
         Utils::exec_cmd($cmd, "Run build-file analyzer on maven-ant.xml.") or die;
 	
         # Fix broken dependency links
-        my $fix_dep = "cd $work_dir && sed \'s\/https:\\/\\/oss\\.sonatype\\.org\\/content\\/repositories\\/snapshots\\//http:\\/\\/central\\.maven\\.org\\/maven2\\/\/g\' maven-build.xml >> temp && mv temp maven-build.xml";
+        my $fix_dep = "cd $work_dir/$module && sed \'s\/https:\\/\\/oss\\.sonatype\\.org\\/content\\/repositories\\/snapshots\\//http:\\/\\/central\\.maven\\.org\\/maven2\\/\/g\' maven-build.xml >> temp && mv temp maven-build.xml";
         Utils::exec_cmd($fix_dep, "Fixing broken dependency links.");
 
-        # Get dependencies if it is maven-ant project
         my $download_dep = "cd $work_dir/$module && ant -Dmaven.repo.local=\"$PROJECT_DIR/lib\" get-deps";
         Utils::exec_cmd($download_dep, "Download dependencies for maven-ant.xml.");
     } elsif (-e "$work_dir/build.gradle") {
