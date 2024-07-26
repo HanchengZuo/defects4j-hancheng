@@ -25,7 +25,7 @@ THE SOFTWARE.
 It defines project-specific properties and targets, and imports the build file
 of the checked-out project version.
 #############################################################################-->
-<project name="D4j-Flink" basedir="${basedir}">
+<project name="D4j-Flink" basedir="${basedir}/flink-clients">
     <!-- TODO: Make sure that the following properties and paths are defined:
            - source.home        ->  Directory of sources
            - test.home          ->  Directory of test sources
@@ -33,6 +33,11 @@ of the checked-out project version.
            - test.classpath     ->  Classpath to compile tests
            - compile.classpath  ->  Classpath to compile sources
     -->
+
+    <!-- Set the Java compiler version to 1.8
+    <property name="javac.target" value="1.8"/>
+    <property name="javac.source" value="1.8"/>
+    <property name="build.compiler" value="javac1.8"/> -->
 
     <property name="junit.jar" value="${d4j.home}/framework/projects/lib/junit-4.11.jar"/>
 
@@ -44,7 +49,7 @@ of the checked-out project version.
     <property name="compile.debug" value="yes" />
 
     <!-- Include existing project build file -->
-    <import file="${d4j.workdir}/build.xml"/>
+    <import file="${d4j.workdir}/flink-clients/build.xml"/>
 
     <!-- Project properties targets -->
     <if> <isset property="ant.refid:compile.classpath" />
@@ -87,8 +92,11 @@ of the checked-out project version.
     <!-- List of all developer-written tests that reliably pass on the fixed version -->
     <!-- Manually generalize test patterns if analyzer produces incorrect outputs -->
     <fileset id="all.manual.tests" dir="${test.dir}" excludes="${d4j.tests.exclude}">
-        <!--include name="____" /-->
-        <!--exclude name="____" /-->
+        <include name='**/${test}.java' />
+        <include name='**/*Test.java' />
+        <include name='**/*TestCase.java' />
+        <include name='**/Test*.java' />
+        <exclude name='**/*Abstract*Test.java' />
     </fileset>
 
     <!-- List of relevant developer-written tests that reliably pass on the fixed version -->
