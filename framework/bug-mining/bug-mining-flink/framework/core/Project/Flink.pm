@@ -60,14 +60,17 @@ sub new {
 ## Determines the directory layout for sources and tests
 ##
 sub determine_layout {
+    @_ == 2 or die $ARG_ERROR;
     my ($self, $rev_id) = @_;
-    my $dir = $self->{prog_root} . "/flink-clients"; # 指定处理的子模块
+    my $work_dir = $self->{prog_root} . "/flink-clients";  # Specify the sub-modules to be processed
 
-    # 使用之前定义的_maven_layout方法
-    my $result = _maven_layout($dir);
+    # Use the previously defined _maven_layout method
+    my $result = _maven_layout($work_dir);
     die "Unknown layout for revision: ${rev_id}" unless defined $result;
     return $result;
 }
+
+
 
 #
 # Post-checkout tasks include, for instance, providing cached build files,
@@ -75,13 +78,14 @@ sub determine_layout {
 #
 sub _post_checkout {
     my ($self, $rev_id, $work_dir) = @_;
+    $work_dir .= "/flink-clients/";
 
     my $project_dir = "$PROJECTS_DIR/$self->{pid}";
     # Check whether ant build file exists
-    unless (-e "$work_dir/flink-clients/build.xml") {
+    unless (-e "$work_dir/build.xml") {
         my $build_files_dir = "$PROJECTS_DIR/$PID/build_files/$rev_id";
         if (-d "$build_files_dir") {
-            Utils::exec_cmd("cp $build_files_dir/flink-clients/* $work_dir/flink-clients", "Copy generated Ant build file") or die;
+            Utils::exec_cmd("cp -r $build_files_dir/* $work_dir", "Copy generated Ant build file") or die;
         }
     }
 }
@@ -95,20 +99,15 @@ sub initialize_revision {
     my ($self, $rev_id, $vid) = @_;
     $self->SUPER::initialize_revision($rev_id);
 
-    my $work_dir = $self->{prog_root} . "/flink-clients";  # 指定处理的子模块
-    my $result = _ant_layout($work_dir) // _maven_layout($work_dir);
+    my $work_dir = $self->{prog_root};
+    $work_dir .= "/flink-clients/";
+
+    my $result = {src=>"flink-clients/src/main/java", test=>"flink-clients/src/test/java"};
     die "Unknown layout for revision: ${rev_id}" unless defined $result;
 
     $self->_add_to_layout_map($rev_id, $result->{src}, $result->{test});
     $self->_cache_layout_map(); # Force cache rebuild
 }
-
-#
-# Distinguish between project layouts and determine src and test directories.
-# Each _layout subroutine returns undef if it doesn't match the layout of the
-# checked-out version. Otherwise, it returns a hash that provides the src and
-# test directory, relative to the working directory.
-#
 
 #
 # Existing Ant build.xml and default.properties
